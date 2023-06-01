@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="PresentationWPF.Views.NewEntityView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:PresentationWPF.Views"
+             xmlns:viewModels="clr-namespace:PresentationWPF.ViewModels"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:AdminNewEntityViewModel}"
+             Height="400" Width="400">
+  <Grid Margin="20">
+    <Grid.Resources>
+      <BooleanToVisibilityConverter x:Key="btvc"/>
+    </Grid.Resources>
+    
+    <Grid.RowDefinitions>
+      <RowDefinition MaxHeight="30"/>
+      <RowDefinition/>
+    </Grid.RowDefinitions>
+    
+    <Button MaxHeight="30"
+      Visibility="{Binding IsAdding, Converter={StaticResource btvc}}"
+      HorizontalAlignment="Right"
+      Command="{Binding CloseCommand}"
+    >
+      <Image Source="{DynamicResource DismissIcon}"/>
+    </Button>
+    
+    <Grid
+      Visibility="{Binding IsAdding, Converter={StaticResource btvc}}"
+      Grid.Row="0" HorizontalAlignment="Left" Width="200">
+      <Label Margin="0 0 0 3" Content="Add new..." Style="{DynamicResource HintLabel}"/>
+      <Border 
+        VerticalAlignment="Top"
+        Style="{DynamicResource TextBoxBorder}"
+      >
+        <ComboBox
+          Margin="0 0 0 0"
+          VerticalAlignment="Top"
+          FontSize="18"
+        >
+          <ComboBox.Items>
+            <Button HorizontalAlignment="Stretch" Background="Transparent" Command="{Binding ProductNavigateCommand}">
+              <TextBlock Text="Product"/>
+            </Button>
+            
+            <Button HorizontalAlignment="Stretch" Background="Transparent" Command="{Binding PharmacyNavigateCommand}">
+              <TextBlock Text="Pharmacy"/>
+            </Button>
+
+            <Button HorizontalAlignment="Stretch" Background="Transparent" Command="{Binding PharmacistNavigateCommand}">
+              <TextBlock Text="Pharmacist"/>
+            </Button>
+          </ComboBox.Items>
+        </ComboBox>
+      </Border>
+    </Grid>
+    
+    <ContentControl Margin="0 20 0 0 " Grid.Row="1" Content="{Binding CurrentViewModel}"/>
+  </Grid>
+</UserControl>

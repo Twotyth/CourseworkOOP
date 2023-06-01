@@ -1,0 +1,237 @@
+﻿@startuml
+'https://plantuml.com/class-diagram
+
+
+abstract class RegisteredUser {
+- _login : string
+- _password : string
++ Id : uint <<get>>
++ Login : string <<get>> <<set>>
++ Password : string <<get>> <<set>>
+# RegisteredUser(id : uint, login : string, password : string)
+}
+
+class Client {
++ Balance : decimal
++ Client(id : uint, login : string, password : string)
+}
+
+class Pharmacist {
++ Salary : uint
++ RegisteredUser(id : uint, login : string, 
+password : string, salary : uint)
+}
+
+class Admin {
++ Admin(id : uint, login : string, password : string)
+}
+
+class Pharmacy {
+- _address : string
++ Id : uint <<get>>
++ Address : string <<get>> <<set>>
++ Stock : ProductStock <<get>>
++ WorkingPharmacist : Pharmacist? <<get>> <<set>>
++ Pharmacy(id : uint, address : string, 
+workingPharmacist : Pharmacist?)
+}
+
+class Product{
+- _name : string
+- _manufacturer : string
+- _price : decimal
+- _description : string
++ Id : uint <<get>>
++ Name : string <<get>> <<set>>
++ Manufacturer : string <<get>> <<set>>
++ FullName : string <<get>>
++ Description : string <<get>> <<set>>
++ Price : decimal <<get>> <<set>>
++ IsOnSale : bool <<get>> <<set>>
++ MedicineInfo : MedicineInfo? <<get>> <<set>>
++ Product(id : uint, name : string, manufacturer : string, 
+medicineInfo : MedicineInfo?, price : decimal, isOnSale : bool = true)
+}
+
+class MedicineInfo {
++ Medicine : Medicine <<get>>
++ Dosage : uint <<get>>
++ Quantity : uint <<get>>
++ DosageForm : DosageForm <<get>>
++ QuantityForm : QuantityForm <<get>>
++ ConsumptionForm : ConsumptionForm <<get>>
++ MedicineInfo(medicine : Medicine, dosage : uint, quantity : uint, 
+dosageForm : DosageForm, quantityForm : QuantityForm, consumptionForm : ConsumptionForm)
+}
+
+class Medicine {
+- _name : string
++ Id : uint <<get>>
++ Name : string <<get>> <<set>>
++ IsPrescriptionRequired : bool <<get>> <<set>>
++ Type : string
++ TypeCategory : string
++ Medicine(id : uint, name : string, isPrescriptionRequired : bool, 
+type : string, typeCategory : string)
+}
+
+class Prescription {
++ Id : uint <<get>>
++ Prescribed : IEnumerable<Medicine> <<get>>
++ Prescription(id : uint, prescribed : IEnumerable<Medicine>) 
+}
+
+class Order {
+- _client : Client?
++ Id : uint <<get>>
++ Client : Client? <<get>> <<set>>
++ Status : OrderStatus <<get>> <<set>>
++ OrderDate : DateOnly <<get>>
++ Ordered : IImmutableDictionary<Product, uint> <<get>>
++ DeliveryPharmacy : Pharmacy <<get>>
++ IsPrescriptionRequired : bool <<get>>
++ Discount : uint <<get>>
++ TotalPrice : decimal <<get>>
++ Order(id : uint, client : Client?, ordered : IDictionary<Product, uint>, 
+deliveryPharmacy : Pharmacy, isPrescriptionRequired : bool, discount : decimal)
+}
+
+class ProductStock{
++ ProductQuantity : Dictionary<Product, uint> <<get>>
++ Orders : List<ProductPackage> <<get>>
++ ProductStock(productsFrom : IEnumerable<(Product, uint)>? = null, 
+ordersFrom : IEnumerable<OrderPackage>? = null)
++ Add(product : Product, quantity : uint) : void
++ AddOrder(order : Order) : void
++ Remove(product : Product, quantity : uint) : void
++ RemoveOrder(orderId : uint) : void
++ HasOrder(orderId : uint)) : bool
+}
+
+class OrderPackage {
++ OrderId : uint <<get>>
++ ArrivalDate : DateOnly <<get>>
++ Discount : decimal <<get>>
++ IsPrescriptionRequired : bool <<get>>
++ OrderPackage(order : Order)
++ OrderPackage(orderId : uint, arrivalDate : DateOnly, 
+discount : decimal, isPrescriptionRequired : bool) 
+}
+
+interface IUserInterface {
++ Exit() : void
++ EditLogin(newLogin : string) : EditLoginResult
++ EditPassword(newPassword : string) : EditPasswordResult
+}
+
+interface IClientInterface {
++ Order(orderedProductsIdQuantity : IDictionary<uint, uint>, deliveryPharmacyId : uint,
+                prescriptionId : uint? = null, balanceMoneyToWithdraw : decimal = 0)
++ GetBalance() : decimal                
+}
+
+interface IPharmacistService {
++ Sell(productsIds : IDictionary<uint, uint>, paymentService : IPaymentService, 
+prescriptionId : uint? = null, clientId : uint? = null, balanceMoneyToWithdraw : decimal? = null)
++ GetPharmacyProducts() : IDictionary<ProductInfo, uint>
++ GiveOutOrder(orderId : uint, prescriptionId : uint?  = null)
++ RegisterNewProducts(products : IEnumerable<(uint productId, uint quantity)>)
++ AcceptOrder(orderId : uint)
+}
+
+interface IAdminInterface {
++ DeleteUser(userId: uint): DeleteUserResult
++ DeleteProduct(productId: uint): DeleteProductResult
++ WithdrawFromSale(productId: uint): WithdrawFromSaleResult
++ ReturnToSale(productId: uint): ReturnToSaleResult
++ DeletePharmacy(pharmacyId: uint): DeletePharmacyResult
++ EditProduct(productId: uint, newName: string, newManufacturer: string, 
+newDescription: string, newMedicineInfo: ProductMedicineInfo?, newPrice: decimal): EditProductResult
++ EditPharmacy(pharmacyId: uint, newAddress: string, newWorkingPharmacistId: uint?): EditPharmacyResult
++ EditPharmacist(pharmacistId: uint, newSalary: uint): EditPharmacistResult
++ CancelOrder(orderId: uint): CancelOrderResult
++ AddUser(userInfo: UserDto): AddUserResult
++ AddProduct(name: string, manufacturer: string, description: string, price: decimal, medicineInfo: ProductMedicineInfo?): AddProductResult
++ AddPharmacy(address: string, workingPharmacistId: uint): AddPharmacyResult
+}
+
+interface IRetrieving<T> {
++ Get() : IEnumerable<T>
+}
+
+interface IEnumerable<T>
+
+
+interface IOrderService {
+    + Order(orderedProductsIdQuantity: IDictionary<uint, uint>, deliveryPharmacyId: uint, 
+    prescriptionId: uint?, clientId: uint?, balanceMoneyToWithdraw: decimal): OrderInfo
+}
+
+interface IPaymentService {
+    + Pay(price : decimal) : bool
+}
+
+abstract class UserServiceBase<T> {
+# UserServiceBase(user : T, userRepos : IRepos<RegisteredUser, UserDto>)
+# ValidateSession() : void
+}
+
+class ClientService
+class PharmacistService
+class AdminService
+class OrderService
+class CashPaymentService
+
+Client --|> RegisteredUser
+Pharmacist --|> RegisteredUser
+Admin --|> RegisteredUser
+
+Pharmacy --o "0...1" Pharmacist
+Pharmacy --* "1...1" ProductStock 
+
+ProductStock -[dashed]-|> "Product" IEnumerable
+ProductStock --* "0...*" OrderPackage
+ProductStock --o "0...*" Product
+
+Order --o "1...1" Pharmacy
+Order --o "0...1" Client
+Order --o "1...*" Product
+
+Prescription --o "1...*" Medicine
+Medicine --o "1...1" MedicineInfo
+MedicineInfo --o "0...1" Product
+
+
+
+IUserInterface --|> IClientInterface
+IUserInterface --|> IPharmacistService
+IUserInterface --|> IAdminInterface
+
+IAdminInterface --|> "MedicineInfo, ProductInfo, ClientInfo, PharmacistInfo, OrderInfo, PharmacyInfo, (string, uint)" IRetrieving
+
+IClientInterface --|> "OrderInfo, ProductInfo, (string, uint)" IRetrieving
+
+IPharmacistService --|> "OrderInfo" IRetrieving
+
+
+UserServiceBase -[dashed]-|> IUserInterface
+
+
+
+ClientService --|> "Client" UserServiceBase
+ClientService -[dashed]-|> IClientInterface
+ClientService --o "1...1" Client
+
+PharmacistService --|> "Pharmacist" UserServiceBase
+PharmacistService -[dashed]-|> IPharmacistService
+PharmacistService --o "1...1" Pharmacist
+
+AdminService --|> "Admin" UserServiceBase
+AdminService -[dashed]-|> IAdminInterface
+AdminService --o "1...1" Admin
+
+
+OrderService -[dashed]-|> IOrderService
+CashPaymentService -[dashed]-|> IPaymentService
+
+@enduml

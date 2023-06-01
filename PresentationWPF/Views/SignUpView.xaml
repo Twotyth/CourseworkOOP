@@ -1,0 +1,202 @@
+﻿<UserControl x:Class="PresentationWPF.Views.SignUpView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:views="clr-namespace:PresentationWPF.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="500" d:DesignWidth="800">
+<Grid>
+    <views:BaseViewControl/>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="325*"/>
+            <ColumnDefinition Width="350*"/>
+            <ColumnDefinition Width="325*"/>
+        </Grid.ColumnDefinitions>
+        
+        
+        <Button
+            Grid.ColumnSpan="3"
+            Margin="0 20 20 0"
+            HorizontalAlignment="Right"
+            Command="{Binding CloseCommand}"
+        >
+            <Image Source="{DynamicResource BackArrowIcon}"/>
+        </Button>
+        
+        <Grid
+            Grid.Row="1" 
+            Grid.Column="1"
+            Margin="0 50 0 0"
+        >
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60*"/>
+                        <ColumnDefinition Width="220*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Height="60" Source="{DynamicResource ProfileAskIcon}"/>
+                    
+                    <Label
+                        Grid.Column="1" x:Name="LoginHintLabel"
+                        Style="{DynamicResource HintLabel}"
+                        Content="Enter login..."
+                        FontSize="24"
+                        Margin="15 0 0 3"
+                    />
+                    
+                    <Border
+                        Grid.Column="1" Style="{DynamicResource TextBoxBorder}"
+                        Margin="15 0 0 0"
+                    >
+                        <TextBox 
+                            Margin="0 0 0 0"
+                            VerticalAlignment="Bottom"
+                            FontSize="24"
+                            Text="{Binding Path=Username, Mode=OneWayToSource}"
+                            TextChanged="ShowLoginHint_OnTextChanged"
+                        />
+                    </Border>
+                </Grid>
+                
+                <Grid Margin="0 30 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60*"/>
+                        <ColumnDefinition Width="220*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <Image 
+                        Grid.RowSpan="2" 
+                        Height="60" 
+                        Source="{DynamicResource LockAskIcon}"
+                        VerticalAlignment="Top"
+                    />
+                    
+                    <Label
+                        Grid.Column="1" 
+                        Margin="15 20 0 13"
+                        x:Name="PasswordHintLabel"
+                        Style="{DynamicResource HintLabel}"
+                        Content="Enter password..."
+                        FontSize="24"
+                    />
+                    <Border
+                        Grid.Column="1" Style="{DynamicResource TextBoxBorder}"
+                        Margin="15 0 0 10"
+                    >
+                        <PasswordBox 
+                            VerticalAlignment="Bottom"
+                            FontSize="24"
+                            PasswordChanged="ShowPasswordHintBindPassword_OnPasswordChanged"
+                        />
+                    </Border>
+                    
+                    
+                    <Label
+                        Grid.Row="1" Grid.Column="1" 
+                        Margin="15 20 0 13"
+                        x:Name="PasswordRepeatHintLabel"
+                        Style="{DynamicResource HintLabel}"
+                        Content="Repeat password..."
+                        FontSize="24"
+                    />
+                    <Border 
+                        Grid.Row="1" Grid.Column="1"
+                        Style="{DynamicResource TextBoxBorder}"
+                        Margin="15 0 0 10"
+                    >
+                        <PasswordBox
+                            VerticalAlignment="Bottom"
+                            FontSize="24"
+                            PasswordChanged="ShowRepeatPasswordHintBindRepeatPassword_OnPasswordChanged"
+                        >
+                            
+                        </PasswordBox>
+                    </Border>
+                    
+                </Grid>
+
+                <ScrollViewer
+                    HorizontalScrollBarVisibility="Auto"
+                    VerticalScrollBarVisibility="Disabled"
+                    Style="{DynamicResource SimpleScrollViewer}"
+                >
+                    
+                    <TextBlock
+                        Text="{Binding ErrorMessage}"
+                        Foreground="Red"
+                        HorizontalAlignment="Center"
+                        Margin="0 0 0 20"
+                    />
+                </ScrollViewer>
+                
+                <Button
+                    Margin="0 10 0  0"
+                    HorizontalAlignment="Stretch"
+                    Height="50"
+                    Command="{Binding SignUpCommand}"
+                >
+                    <Border 
+                        Background="{DynamicResource Primary}"
+                        CornerRadius="10"
+                    >
+                        <StackPanel 
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                        >
+                            <TextBlock 
+                                Text="Sign Up"
+                                TextAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="24"
+                                Foreground="{DynamicResource OnPrimary}"
+                            />
+                            <Image
+                                Source="{DynamicResource NextArrowIconOnPrimary}"
+                                Margin="5 0  0 0"
+                                Width="28">
+                                <Image.LayoutTransform>
+                                    <RotateTransform Angle="180"/>
+                                </Image.LayoutTransform>
+                            </Image>
+                        </StackPanel>
+                    </Border>
+                </Button>
+
+                
+                <TextBlock 
+                    Margin="0 5 0 0"
+                    FontSize="14"
+                    Text="By signing up,"
+                    HorizontalAlignment="Center"
+                />
+                
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock
+                        FontSize="14"
+                        Text="You agree to ours"
+                    />
+                    <TextBlock 
+                        Margin="5 0 0 0"
+                        FontSize="14"
+                        Text="Terms and conditions."
+                        Foreground="{DynamicResource Primary}"
+                    />
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        
+    </Grid>
+</Grid>
+</UserControl>

@@ -1,0 +1,129 @@
+﻿<UserControl x:Class="PresentationWPF.Views.PharmacistNewOrdersAndProductsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:PresentationWPF.Views"
+             xmlns:viewModels="clr-namespace:PresentationWPF.ViewModels"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PharmacistNewOrdersAndProductsViewModel}"
+             d:DesignHeight="500" d:DesignWidth="800">
+  <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="btvc"/>
+  </UserControl.Resources>
+  <Grid Margin="20">
+    <Grid.RowDefinitions>
+      <RowDefinition MaxHeight="30"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    
+    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+      <Button Background="Transparent" Command="{Binding BackNavigateCommand}">
+        <Image Source="{DynamicResource BackArrowIcon}"/>
+      </Button>
+      
+      <Button Margin="10 0 0 0" Command="{Binding PersonalCabinetNavigateCommand}" Background="Transparent" >
+        <Image Source="{DynamicResource ProfileIcon}"/>
+      </Button>
+    </StackPanel>
+    
+    
+    <Grid Grid.Row="1" Margin="30 10 30 0">
+      <ScrollViewer Style="{DynamicResource SimpleScrollViewer}" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <TextBlock Padding="0 10"
+              TextAlignment="Center"
+              Background="LightGray"
+              FontSize="24"
+              
+              Visibility="{Binding OrdersEmpty, Converter={StaticResource btvc}}"
+              Text="No orders to this pharmacy"
+            />
+            
+            <ScrollViewer
+              Grid.Row="0" Style="{DynamicResource SimpleScrollViewer}" 
+              HorizontalScrollBarVisibility="Auto"
+            >
+              <ItemsControl ItemsSource="{Binding OrdersToAccept}">
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                  </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <Button Background="Transparent" Command="{Binding AcceptOrderCommand}">
+                      <Border Margin="5 0" Padding="20 10" BorderBrush="{DynamicResource Secondary}" BorderThickness="3" CornerRadius="15">
+                        <StackPanel Orientation="Horizontal">
+                          <Image Source="{DynamicResource DeliveringIcon}"/>
+                          <TextBlock 
+                            Margin="10 0  0 0"
+                            FontSize="18" Text="{Binding Id}"
+                          />
+                        </StackPanel>
+                      </Border>
+                    </Button>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                
+                
+              </ItemsControl>
+            </ScrollViewer>
+            
+            
+            <Grid Margin="0 10 0 0" Grid.Row="1">
+              <DataGrid ItemsSource="{Binding ViewingProductsToRegister}">
+                <DataGrid.Columns>
+                  <DataGridTextColumn Header="Name" Width="*" Binding="{Binding DisplayName}"/>
+                  
+                  <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                      <DataTemplate>
+                        <Button Command="{Binding DecreaseQuantityCommand}">
+                          <Image Source="{DynamicResource MinusCircleIcon}"/>
+                        </Button>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                  </DataGridTemplateColumn>
+                  
+                  <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}"/>
+                  
+                  <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                      <DataTemplate>
+                        <Button Command="{Binding IncreaseQuantityCommand}">
+                          <Image Source="{DynamicResource PlusCircleIcon}"/>
+                        </Button>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                  </DataGridTemplateColumn>
+                  
+                  <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                      <DataTemplate>
+                        <Button Margin="0 4" Command="{Binding RegisterToPharmacyCommand}">
+                          <Border Padding="10  5" CornerRadius="15" Background="{DynamicResource Primary}">
+                            <TextBlock Foreground="{DynamicResource OnPrimary}" Text="Register"/>
+                          </Border>
+                        </Button>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                  </DataGridTemplateColumn>
+                  
+                </DataGrid.Columns>
+              </DataGrid>
+            </Grid>
+            
+          </Grid>
+        </StackPanel>
+      </ScrollViewer>
+    </Grid>
+    
+  </Grid>
+</UserControl>

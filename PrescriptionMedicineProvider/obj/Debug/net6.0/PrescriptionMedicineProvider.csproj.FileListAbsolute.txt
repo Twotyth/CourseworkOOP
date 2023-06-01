@@ -1,0 +1,15 @@
+C:\Users\timka\source\CS repos\Coursework OOP\PrescriptionMedicineProvider\bin\Debug\net6.0\PrescriptionMedicineProvider.exe
+C:\Users\timka\source\CS repos\Coursework OOP\PrescriptionMedicineProvider\bin\Debug\net6.0\PrescriptionMedicineProvider.deps.json
+C:\Users\timka\source\CS repos\Coursework OOP\PrescriptionMedicineProvider\bin\Debug\net6.0\PrescriptionMedicineProvider.runtimeconfig.json
+C:\Users\timka\source\CS repos\Coursework OOP\PrescriptionMedicineProvider\bin\Debug\net6.0\PrescriptionMedicineProvider.dll
+C:\Users\timka\source\CS repos\Coursework OOP\PrescriptionMedicineProvider\bin\Debug\net6.0\PrescriptionMedicineProvider.pdb
+C:\Users\timka\source\CS repos\Coursework OOP\PrescriptionMedicineProvider\obj\Debug\net6.0\PrescriptionMedicineProvider.csproj.AssemblyReference.cache
+C:\Users\timka\source\CS repos\Coursework OOP\PrescriptionMedicineProvider\obj\Debug\net6.0\PrescriptionMedicineProvider.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\timka\source\CS repos\Coursework OOP\PrescriptionMedicineProvider\obj\Debug\net6.0\PrescriptionMedicineProvider.AssemblyInfoInputs.cache
+C:\Users\timka\source\CS repos\Coursework OOP\PrescriptionMedicineProvider\obj\Debug\net6.0\PrescriptionMedicineProvider.AssemblyInfo.cs
+C:\Users\timka\source\CS repos\Coursework OOP\PrescriptionMedicineProvider\obj\Debug\net6.0\PrescriptionMedicineProvider.csproj.CoreCompileInputs.cache
+C:\Users\timka\source\CS repos\Coursework OOP\PrescriptionMedicineProvider\obj\Debug\net6.0\PrescriptionMedicineProvider.dll
+C:\Users\timka\source\CS repos\Coursework OOP\PrescriptionMedicineProvider\obj\Debug\net6.0\refint\PrescriptionMedicineProvider.dll
+C:\Users\timka\source\CS repos\Coursework OOP\PrescriptionMedicineProvider\obj\Debug\net6.0\PrescriptionMedicineProvider.pdb
+C:\Users\timka\source\CS repos\Coursework OOP\PrescriptionMedicineProvider\obj\Debug\net6.0\PrescriptionMedicineProvider.genruntimeconfig.cache
+C:\Users\timka\source\CS repos\Coursework OOP\PrescriptionMedicineProvider\obj\Debug\net6.0\ref\PrescriptionMedicineProvider.dll

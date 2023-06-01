@@ -1,0 +1,369 @@
+﻿<UserControl x:Class="PresentationWPF.Views.FilterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:PresentationWPF.Views"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:vms="clr-namespace:PresentationWPF.ViewModels"
+             mc:Ignorable="d"
+             Height="400" Width="400"
+             >
+  <!-- <UserControl.DataContext> -->
+  <!--   <vms:FilterViewModel/> -->
+  <!-- </UserControl.DataContext> -->
+  <Grid Margin="20">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="30" />
+      <RowDefinition/>
+    </Grid.RowDefinitions>
+
+    <Button
+      HorizontalAlignment="Right"
+      Command="{Binding CloseCommand}">
+      <Image Source="{DynamicResource DismissIcon}" />
+    </Button>
+    
+    
+    <Grid VerticalAlignment="Center" HorizontalAlignment="Left">
+      <Button 
+        Command="{Binding ResetFiltersCommand}"
+        HorizontalAlignment="Left" 
+      >
+        <Border CornerRadius="10" Background="Crimson">
+          <TextBlock Padding="5" Foreground="{DynamicResource OnPrimary}" FontSize="22" Text="Clear" VerticalAlignment="Center"/>
+        </Border>
+      </Button>
+    </Grid>
+
+    <TextBlock
+      Grid.Row="0"
+      Text="Filters"
+      FontSize="24"
+      FontWeight="Bold"
+      HorizontalAlignment="Center" />
+    
+    <!-- Filter viewer -->
+    <ScrollViewer
+      Style="{DynamicResource SimpleScrollViewer}"
+      Grid.Row="1"
+      Margin="0 40 0 0"
+      VerticalScrollBarVisibility="Auto"
+    >
+      <StackPanel>
+        
+        <!-- Manufacturers -->
+        <Grid> 
+          <StackPanel>
+            <Button 
+              Command="{Binding ChangeManufacturerListVisibilityCommand}"
+              Click="ButtonFlipExpander_OnClick"
+            >
+              <Grid Background="Transparent">
+                <StackPanel Orientation="Horizontal">
+                  <Image
+                    Width="40"
+                    Source="{DynamicResource ManufacturerFilterIcon}"
+                    HorizontalAlignment="Left" />
+                  <TextBlock
+                    Margin="10 0 0 0"
+                    Text="Manufacturer"
+                    FontSize="18"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center" />
+                </StackPanel>
+
+                <Image
+                  Width="30"
+                  Source="{DynamicResource ExpandIcon}"
+                  HorizontalAlignment="Right" 
+                  VerticalAlignment="Center"
+                />
+              </Grid>
+            </Button>
+          
+          <!-- Manufacturer list -->
+          
+            <ItemsControl 
+              Visibility="{Binding ManufacturerListVisibility}"
+              ItemsSource="{Binding AllManufacturers}"
+            >
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <WrapPanel />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Border
+                    Margin="5"
+                    Padding="5"
+                    BorderThickness="3"
+                    BorderBrush="{DynamicResource Secondary}"
+                    CornerRadius="8"
+                    HorizontalAlignment="Left"
+                  >
+                    <Button Command="{Binding AddToFilterCommand}">
+                      <TextBlock 
+                        FontSize="14" 
+                        Text="{Binding Value}"
+                      />
+                    </Button>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+          <!-- Selected manufacturers -->
+          
+            <ScrollViewer 
+              Style="{DynamicResource SimpleScrollViewer}"
+              HorizontalScrollBarVisibility="Auto"
+            >
+              <ItemsControl  
+                ItemsSource="{Binding SelectedManufacturers}"
+              >
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                  </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <Border
+                      Margin="5"
+                      Padding="5"
+                      BorderThickness="3"
+                      BorderBrush="{DynamicResource Secondary}"
+                      CornerRadius="8"
+                      HorizontalAlignment="Left"
+                    >
+                      <Button Command="{Binding RemoveFromFilterCommand}">
+                        <TextBlock 
+                          FontSize="14" 
+                          Text="{Binding Value}" HorizontalAlignment="Left"
+                        />
+                      </Button>
+                    </Border>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </ScrollViewer>
+          </StackPanel>
+        </Grid>
+        
+        
+        <!-- Types -->
+        <Grid>
+          <StackPanel>
+            <Button 
+              Command="{Binding ChangeTypeListVisibilityCommand}"
+              Click="ButtonFlipExpander_OnClick"
+            >
+              <Grid>
+                <StackPanel Background="Transparent" Margin="0 10 0 0" Orientation="Horizontal">
+                  <Image Source="{DynamicResource TypeFilterIcon}" Width="40"/>
+                  <TextBlock
+                    Margin="10 0 0 0"
+                    Text="Type"
+                    FontSize="18"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center" 
+                  />
+                </StackPanel>
+                <Image
+                  Width="30"
+                  Source="{DynamicResource ExpandIcon}"
+                  HorizontalAlignment="Right" 
+                  VerticalAlignment="Center"
+                />
+              </Grid>
+            </Button>
+            
+            
+            <!-- Types list -->
+            <ItemsControl 
+              Visibility="{Binding TypeListVisibility}"
+              ItemsSource="{Binding AllTypes}"
+            >
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <WrapPanel />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Border
+                    Margin="5"
+                    Padding="5"
+                    BorderThickness="3"
+                    BorderBrush="{DynamicResource Secondary}"
+                    CornerRadius="8"
+                    HorizontalAlignment="Left"
+                  >
+                    <Button Command="{Binding AddToFilterCommand}">
+                      <TextBlock 
+                        FontSize="14" 
+                        Text="{Binding Value}"
+                      />
+                    </Button>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            
+            <!-- Selected types -->
+            
+            <ScrollViewer 
+              Style="{DynamicResource SimpleScrollViewer}"
+              HorizontalScrollBarVisibility="Auto"
+            >
+              <ItemsControl  
+                ItemsSource="{Binding SelectedTypes}"
+              >
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                  </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <Border
+                      Margin="5"
+                      Padding="5"
+                      BorderThickness="3"
+                      BorderBrush="{DynamicResource Secondary}"
+                      CornerRadius="8"
+                      HorizontalAlignment="Left"
+                    >
+                      <Button Command="{Binding RemoveFromFilterCommand}">
+                        <TextBlock 
+                          FontSize="14" 
+                          Text="{Binding Value}" HorizontalAlignment="Left"
+                        />
+                      </Button>
+                    </Border>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </ScrollViewer>
+            
+          </StackPanel>
+          
+          
+          
+        </Grid>
+        
+        <!-- Categories -->
+        <Grid>
+          <StackPanel>
+            <Button 
+              Command="{Binding ChangeCategoryListVisibilityCommand}"
+              Click="ButtonFlipExpander_OnClick"
+            >
+              <Grid Background="Transparent">
+                <StackPanel Margin="0 10 0 0" Orientation="Horizontal">
+                  <Image Source="{DynamicResource CategoryFilterIcon}" Width="40"/>
+                  <TextBlock
+                    Margin="10 0 0 0"
+                    Text="Category"
+                    FontSize="18"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center" 
+                  />
+                </StackPanel>
+                <Image
+                  Width="30"
+                  Source="{DynamicResource ExpandIcon}"
+                  HorizontalAlignment="Right" 
+                  VerticalAlignment="Center"
+                />
+              </Grid>
+            </Button>
+            
+            
+            <!-- Categories list -->
+            <ItemsControl 
+              Visibility="{Binding CategoryListVisibility}"
+              ItemsSource="{Binding AllCategories}"
+            >
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <WrapPanel />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Border
+                    Margin="5"
+                    Padding="5"
+                    BorderThickness="3"
+                    BorderBrush="{DynamicResource Secondary}"
+                    CornerRadius="8"
+                    HorizontalAlignment="Left"
+                  >
+                    <Button Command="{Binding AddToFilterCommand}">
+                      <TextBlock 
+                        FontSize="14" 
+                        Text="{Binding Value}"
+                      />
+                    </Button>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            
+            <!-- Selected categories -->
+            
+            <ScrollViewer 
+              Style="{DynamicResource SimpleScrollViewer}"
+              HorizontalScrollBarVisibility="Auto"
+            >
+              <ItemsControl  
+                ItemsSource="{Binding SelectedCategories}"
+              >
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                  </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <Border
+                      Margin="5"
+                      Padding="5"
+                      BorderThickness="3"
+                      BorderBrush="{DynamicResource Secondary}"
+                      CornerRadius="8"
+                      HorizontalAlignment="Left"
+                    >
+                      <Button Command="{Binding RemoveFromFilterCommand}">
+                        <TextBlock 
+                          FontSize="14" 
+                          Text="{Binding Value}" HorizontalAlignment="Left"
+                        />
+                      </Button>
+                    </Border>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </ScrollViewer>
+            
+          </StackPanel>
+        </Grid>
+        
+        
+        
+        
+        
+        
+        
+        
+      </StackPanel>
+    </ScrollViewer>
+    
+  </Grid>
+</UserControl>

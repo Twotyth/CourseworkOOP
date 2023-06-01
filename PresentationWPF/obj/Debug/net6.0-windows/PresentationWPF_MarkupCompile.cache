@@ -1,0 +1,20 @@
+﻿PresentationWPF
+
+
+winexe
+C#
+.cs
+C:\Users\timka\source\CS repos\Coursework OOP\PresentationWPF\obj\Debug\net6.0-windows\
+PresentationWPF
+none
+false
+TRACE;DEBUG;NET;NET6_0;NETCOREAPP
+C:\Users\timka\source\CS repos\Coursework OOP\PresentationWPF\App.xaml
+22587163980
+
+511283573864
+211-937829948
+Views\AdminView.xaml;Views\BaseViewControl.xaml;Views\ClientCabinetView.xaml;Views\ClientCartView.xaml;Views\ClientCatalogView.xaml;Views\FilterView.xaml;Views\GuestCartView.xaml;Views\GuestCatalogView.xaml;Views\LoginView.xaml;Views\MainView.xaml;Views\NewEntityView.xaml;Views\NewPharmacistView.xaml;Views\NewPharmacyView.xaml;Views\NewProductView.xaml;Views\PersonalCabinetView.xaml;Views\PharmacistCheckoutView.xaml;Views\PharmacistNewOrdersAndProductsView.xaml;Views\ProductItemView.xaml;Views\Resources\colors.xaml;Views\Resources\icons.xaml;Views\SignUpView.xaml;Views\Styles.xaml;
+
+False
+

@@ -1,0 +1,330 @@
+﻿<UserControl x:Class="PresentationWPF.Views.NewProductView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:PresentationWPF.Views"
+             xmlns:viewModels="clr-namespace:PresentationWPF.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="900" d:DesignWidth="400"
+             d:DataContext="{d:DesignInstance viewModels:AdminProductViewModel}">
+  <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="Btvc" />
+  </UserControl.Resources>
+  <Grid>
+
+
+    <Grid Margin="20">
+      <Grid.RowDefinitions>
+        <RowDefinition MaxHeight="30" />
+        <RowDefinition />
+      </Grid.RowDefinitions>
+
+      <Button
+        Visibility="{Binding IsEditing, Converter={StaticResource Btvc}}"
+        Command="{Binding CloseCommand}"
+        Background="{DynamicResource Background}"
+        HorizontalAlignment="Right">
+        <Image Source="{DynamicResource DismissIcon}" />
+      </Button>
+      
+      <TextBlock 
+        Visibility="{Binding IsAdding, Converter={StaticResource Btvc}}"
+        Grid.Row="0" 
+        FontWeight="Bold" 
+        FontSize="24" 
+        Text="Add" 
+        HorizontalAlignment="Center" 
+        VerticalAlignment="Center" 
+      />
+      
+      <TextBlock 
+        Visibility="{Binding IsEditing, Converter={StaticResource Btvc}}"
+        Grid.Row="0" 
+        FontWeight="Bold" 
+        FontSize="24" 
+        Text="Edit" 
+        HorizontalAlignment="Center" 
+        VerticalAlignment="Center" 
+      />
+
+      <Grid Margin="0 40 0 0" Grid.Row="1">
+        <Grid.RowDefinitions>
+          <RowDefinition />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        
+        
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Style="{DynamicResource SimpleScrollViewer}">
+          <StackPanel>
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+              </Grid.ColumnDefinitions>
+              
+              <StackPanel>
+                <!-- NameBox -->
+                <Grid Margin="0 0 10 0">
+                  <Label Name="NameHint" Margin="0 0 0 3" Content="Product name..." Style="{DynamicResource HintLabel}"/>
+                  <Border Style="{DynamicResource TextBoxBorder}">
+                    <TextBox
+                      VerticalAlignment="Bottom"
+                      Text="{Binding Name}"
+                      TextChanged="NameBoxShowNameHint_OnTextChanged"
+                    />
+                  </Border>
+                </Grid>
+                  
+                <Grid Margin=" 0 20 10 0">
+                  <Label Name="ManufacturerHint" Margin="0 0 0 3" Content="Manufacturer..." Style="{DynamicResource HintLabel}"/>
+                  <Border Style="{DynamicResource TextBoxBorder}">
+                    <TextBox
+                      VerticalAlignment="Bottom"
+                      Text="{Binding Manufacturer}"
+                      TextChanged="NameBoxShowManufacturerHint_OnTextChanged"
+                    />
+                  </Border>
+                </Grid>
+                
+                
+                
+                <Grid Margin="0 20 10 0">
+                  <Label Name="PriceHint" Margin="0 0  0 3" Style="{DynamicResource HintLabel}" Content="Price..."/>
+                  <Border Style="{DynamicResource TextBoxBorder}" >
+                    <TextBox 
+                      Text="{Binding Price}"
+                      TextChanged="PriceBoxShowHint_OnTextChanged"
+                    />
+                  </Border>
+                </Grid>
+                
+                
+              </StackPanel>
+              
+              <StackPanel VerticalAlignment="Center" Grid.Column="1">
+                <!-- Medical checkbox -->
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                  </Grid.ColumnDefinitions>
+                  <Button 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Height="32"
+                    Width="32"
+                    Command="{Binding ChangeMedicalOptionCommand}"
+                  >
+                    <Button.Resources>
+                      <BooleanToVisibilityConverter x:Key="Btvc"/>
+                    </Button.Resources>
+                    <Grid>
+                      <Border
+                        Background="Transparent"
+                        CornerRadius="8"
+                        BorderThickness="3"
+                        BorderBrush="{DynamicResource Secondary}" />
+                      <Image 
+                        Margin="5 0" 
+                        Visibility="{Binding Converter={StaticResource Btvc}, Path=IsMedical}"
+                        Source="{DynamicResource ConfirmIcon}"
+                      />
+                    </Grid>
+                  </Button>
+                    
+                  <TextBlock 
+                    Grid.Column="1" Margin="0 0 0 0"
+                    HorizontalAlignment="Center"
+                    TextWrapping="Wrap"
+                    VerticalAlignment="Center"
+                    Text="Is a medical product"
+                    FontSize="20"
+                  />
+                </Grid>
+              </StackPanel>
+
+            </Grid>
+            
+            <Grid Margin="0 20 0 0" MinHeight="100">
+              <Label Name="DescriptionHint" VerticalAlignment="Top" Content="Description..." Style="{DynamicResource HintLabel}"/>
+              <Border Style="{DynamicResource TextBoxBorder}">
+                <TextBox 
+                  Text="{Binding Description}" 
+                  TextWrapping="Wrap"
+                  TextChanged="ShowDescriptionHing_OnTextChanged"
+                />
+              </Border>
+            </Grid>
+
+            
+            <Grid 
+              Visibility="{Binding IsMedical, Converter={StaticResource Btvc}}" 
+              Margin="0 0 0 0"
+            >
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+              </Grid.ColumnDefinitions>
+              
+              <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition />
+                <RowDefinition />
+              </Grid.RowDefinitions>
+              
+              <Rectangle
+                Grid.ColumnSpan="2"
+                Margin="40" 
+                Stroke="{DynamicResource Primary}"
+                StrokeThickness="3"
+              />
+              
+              <Grid Margin="0 40 0 0" Grid.ColumnSpan="2" MinWidth="180" HorizontalAlignment="Center">
+                <Label Name="MedicineHint" Margin="0 0 0 3" Content="Medicine..." Style="{DynamicResource HintLabel}"/>
+                
+                <Border
+                  Style="{DynamicResource TextBoxBorder}"
+                >
+                  <ComboBox
+                    Margin="0 0 0 0"
+                    VerticalAlignment="Bottom"
+                    FontSize="18"
+                    ItemsSource="{Binding Medicines}"
+                    SelectedItem="{Binding Medicine}"
+                    SelectionChanged="MedicineBoxShowHint_OnSelectionChanged">
+                    <ComboBox.ItemTemplate>
+                      <DataTemplate>
+                        <TextBlock VerticalAlignment="Bottom" Text="{Binding Name}"/>
+                      </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                  </ComboBox>
+                </Border>
+              </Grid>
+              
+              <Grid Margin="0 40 10 0" Grid.Row="1" Grid.Column="0">
+                <Label Name="DosageHint" Content="Dosage..." Margin="0 0 0 3" Style="{DynamicResource HintLabel}"/>
+                <Border Style="{DynamicResource TextBoxBorder}">
+                  <TextBox 
+                    Text="{Binding Dosage}"
+                    TextChanged="DosageBoxShowHint_OnTextChanged"
+                  />
+                  
+                </Border>
+              </Grid>
+              
+              <Grid Margin="0 40 0 0" Grid.Row="1" Grid.Column="1">
+                <Label Name="DosageFormHint" Margin="0 0 0 3" Content="Dosage form..." Style="{DynamicResource HintLabel}"/>
+                <Border VerticalAlignment="Bottom"
+                  Style="{DynamicResource TextBoxBorder}"
+                >
+                  <ComboBox
+                    Margin="0 0 0 0"
+                    VerticalAlignment="Bottom"
+                    FontSize="18"
+                    ItemsSource="{Binding DosageForms}"
+                    SelectedItem="{Binding DosageForm}"
+                    SelectionChanged="DosageBoxShowHint_OnSelectionChanged">
+                  </ComboBox>
+                </Border>
+              </Grid>
+              
+              <Grid Margin="0 40 10 0" Grid.Row="2" Grid.Column="0">
+                <Label Name="QuantityHint" Content="Quantity..." Margin="0 0 0 3" Style="{DynamicResource HintLabel}"/>
+                <Border Style="{DynamicResource TextBoxBorder}">
+                  <TextBox 
+                    Text="{Binding Quantity}"
+                    TextChanged="QunatityBoxShowHint_OnTextChanged"
+                  />
+                  
+                </Border>
+              </Grid>
+              
+              <Grid Margin="0 40 0 0" Grid.Row="2" Grid.Column="1">
+                <Label Name="QuantityFormHint" Margin="0 0 0 3" Content="Quantity form..." Style="{DynamicResource HintLabel}"/>
+                <Border VerticalAlignment="Bottom"
+                        Style="{DynamicResource TextBoxBorder}"
+                >
+                  <ComboBox
+                    Margin="0 0 0 0"
+                    VerticalAlignment="Bottom"
+                    FontSize="18"
+                    ItemsSource="{Binding QuantityForms}"
+                    SelectedItem="{Binding QuantityForm}"
+                    SelectionChanged="QuantityBoxShowHint_OnSelectionChanged">
+                  </ComboBox>
+                </Border>
+              </Grid>
+              
+              <Grid Margin="0 40 0 0" Grid.Row="3" Grid.Column="0">
+                <Label Name="ConsumptionFormHint" Margin="0 0 0 3" Content="Consumption form..." Style="{DynamicResource HintLabel}"/>
+                <Border VerticalAlignment="Bottom"
+                        Style="{DynamicResource TextBoxBorder}"
+                >
+                  <ComboBox
+                    Margin="0 0 0 0"
+                    VerticalAlignment="Bottom"
+                    FontSize="18"
+                    ItemsSource="{Binding ConsumptionForms}"
+                    SelectedItem="{Binding ConsumptionForm}"
+                    SelectionChanged="ConsumptionBoxShowHint_OnSelectionChanged">
+                  </ComboBox>
+                </Border>
+              </Grid>
+              
+            </Grid>
+
+          </StackPanel>
+        </ScrollViewer>
+
+        
+        
+        
+        
+        <StackPanel Grid.Row="1">
+          <ScrollViewer HorizontalScrollBarVisibility="Auto" Style="{DynamicResource SimpleScrollViewer}">
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+              <TextBlock Foreground="Red" Text="{Binding ErrorMessage}" HorizontalAlignment="Center"/>
+            </StackPanel>
+          </ScrollViewer>
+          <!-- Action button -->
+          <Grid Margin="0 5 0 0">
+            <Button
+              Visibility="{Binding IsAdding, Converter={StaticResource Btvc}}"
+              Command="{Binding AddCommand}"
+              HorizontalAlignment="Center">
+              <Border
+                Background="{DynamicResource Primary}"
+                CornerRadius="15" Padding="20 5">
+                <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="Add New" FontSize="20" Foreground="{DynamicResource OnPrimary}" />
+                  <Image Margin="10 0 0 0" Source="{DynamicResource ConfirmIconInversed}" />
+                </StackPanel>
+              </Border>
+            </Button>
+
+
+            <Button
+              Visibility="{Binding IsEditing, Converter={StaticResource Btvc}}"
+              Command="{Binding EditCommand}"
+              HorizontalAlignment="Center">
+              <Border
+                Background="{DynamicResource Primary}"
+                CornerRadius="15" Padding="20 5">
+                <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="Save" FontSize="20" Foreground="{DynamicResource OnPrimary}" />
+                  <Image Margin="10 0 0 0" Source="{DynamicResource ConfirmIconInversed}" />
+                </StackPanel>
+              </Border>
+            </Button>
+
+          </Grid>
+        </StackPanel>
+      </Grid>
+
+    </Grid>
+  </Grid>
+</UserControl>
